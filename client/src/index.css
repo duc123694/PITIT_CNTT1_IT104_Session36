@@ -1,0 +1,93 @@
+.task-manager {
+  max-width: 600px;
+  margin: 20px auto;
+  background: #f9fafb;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  font-family: sans-serif;
+}
+
+.task-manager h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.task-input,
+.task-filters {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.task-input input,
+.task-filters input,
+.task-input select,
+.task-filters select {
+  flex: 1;
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid #ddd;
+}
+
+.task-input button {
+  background: #2563eb;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.task-input button:hover {
+  background: #1e40af;
+}
+
+.task-list {
+  list-style: none;
+  padding: 0;
+}
+
+.task-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: white;
+  padding: 10px;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  border: 1px solid #eee;
+  justify-content: space-between;
+}
+
+.task-item .completed {
+  text-decoration: line-through;
+  color: gray;
+}
+
+.priority {
+  padding: 2px 8px;
+  border-radius: 8px;
+  font-size: 12px;
+  font-weight: bold;
+  color: white;
+}
+
+.priority.high {
+  background: #ef4444;
+}
+
+.priority.medium {
+  background: #f97316;
+}
+
+.priority.low {
+  background: #22c55e;
+}
+
+.delete-btn, .edit-btn {
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-size: 16px;
+}
