@@ -11,6 +11,8 @@ export default function TaskManager() {
   const [reload, setReload] = useState(0);
   const [editingTaskId, setEditingTaskId] = useState<number | null>(null);
   const [editForm, setEditForm] = useState({ name: "", priority: "" });
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [taskIdToDelete, setTaskIdToDelete] = useState<number | null>(null);
 
   useEffect(() => {
     axios
@@ -65,6 +67,25 @@ export default function TaskManager() {
     setEditingTaskId(null);
     setEditForm({ name: "", priority: "" });
     setReload(reload + 1);
+  };
+
+  const handleDeleteClick = (taskId: number) => {
+    setTaskIdToDelete(taskId);
+    setShowDeleteModal(true);
+  };
+
+  const confirmDelete = () => {
+    if (taskIdToDelete !== null) {
+      dispatch(deleteTask(taskIdToDelete));
+      setReload(reload + 1);
+    }
+    setShowDeleteModal(false);
+    setTaskIdToDelete(null);
+  };
+
+  const cancelDelete = () => {
+    setShowDeleteModal(false);
+    setTaskIdToDelete(null);
   };
 
   return (
@@ -171,10 +192,7 @@ export default function TaskManager() {
             <div>
               <button
                 className="delete-btn"
-                onClick={() => {
-                  dispatch(deleteTask(task.id));
-                  setReload(reload + 1);
-                }}
+                onClick={() => handleDeleteClick(task.id)}
               >
                 🗑
               </button>
@@ -188,6 +206,45 @@ export default function TaskManager() {
           </li>
         ))}
       </ul>
+
+      {showDeleteModal && (
+        <div className="modal" style={{
+          position: "fixed",
+          top: 0,
+          left: 0,
+          width: "100%",
+          height: "100%",
+          background: "rgba(0, 0, 0, 0.5)",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          zIndex: 1000
+        }}>
+          <div className="modal-content" style={{
+            background: "white",
+            padding: "20px",
+            borderRadius: "5px",
+            textAlign: "center"
+          }}>
+            <h3>Xác nhận xóa</h3>
+            <p>Bạn có chắc muốn xóa công việc này?</p>
+            <div style={{ display: "flex", gap: "10px", justifyContent: "center" }}>
+              <button
+                onClick={confirmDelete}
+                style={{ background: "#ff4444", color: "white", padding: "8px 16px", border: "none", borderRadius: "4px" }}
+              >
+                Xóa
+              </button>
+              <button
+                onClick={cancelDelete}
+                style={{ background: "#ccc", color: "black", padding: "8px 16px", border: "none", borderRadius: "4px" }}
+              >
+                Hủy
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
